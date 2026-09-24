@@ -33,15 +33,25 @@
   var firstFit = true;
   var lastSignature = "";
 
-  var fmtTime = new Intl.DateTimeFormat("es", { hour: "2-digit", minute: "2-digit" });
-  var fmtDay = new Intl.DateTimeFormat("es", { day: "2-digit", month: "short" });
-  var fmtFull = new Intl.DateTimeFormat("es", {
-    day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit"
+  // Todas las horas en hora de Colombia, sin importar la zona del telefono o
+  // computador que abra el enlace.
+  var TZ = "America/Bogota";
+  var fmtTime = new Intl.DateTimeFormat("es-CO", {
+    timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: true
+  });
+  var fmtDay = new Intl.DateTimeFormat("es-CO", {
+    timeZone: TZ, day: "2-digit", month: "short"
+  });
+  var fmtFull = new Intl.DateTimeFormat("es-CO", {
+    timeZone: TZ, day: "2-digit", month: "short", hour: "2-digit",
+    minute: "2-digit", hour12: true
+  });
+  var fmtDate = new Intl.DateTimeFormat("en-CA", {
+    timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit"
   });
 
   function sameDay(a, b) {
-    return a.getFullYear() === b.getFullYear() &&
-      a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+    return fmtDate.format(a) === fmtDate.format(b);
   }
 
   function label(date, multiDay) {
@@ -147,7 +157,8 @@
     if (live) setStatus("live", "En vivo");
     else setStatus("stopped", "Seguimiento detenido");
 
-    var note = "Guardia activada el " + fmtFull.format(started) + ". ";
+    var note = "Horas en hora de Colombia. Guardia activada el " +
+      fmtFull.format(started) + ". ";
     note += live
       ? "La página se actualiza sola cada 20 segundos. "
       : "La persona ya no está compartiendo su ubicación. ";
