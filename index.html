@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Solo se habla con Supabase y con los mosaicos de OpenStreetMap. Nada de
+       scripts externos ni en linea. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; connect-src https://oxzhmeeyiesflhhhehpa.supabase.co; base-uri 'none'; form-action 'none'">
+  <!-- El token va en el #fragmento, que nunca se envia; aun asi, a terceros solo
+       se les manda el origen. -->
+  <meta name="referrer" content="strict-origin">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="color-scheme" content="light dark">
+  <title>Seguimiento</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span>Seguimiento de ubicación</span>
+    </div>
+    <span id="status" class="pill pill-wait">Cargando…</span>
+  </header>
+
+  <main id="app" class="app" hidden>
+    <div id="map" class="map" role="region" aria-label="Mapa del recorrido"></div>
+
+    <section class="sheet" aria-label="Detalle del recorrido">
+      <div class="summary">
+        <div>
+          <div class="label">Última ubicación</div>
+          <div id="last-time" class="big">—</div>
+          <div id="last-ago" class="muted">—</div>
+        </div>
+        <div class="actions">
+          <a id="gmaps" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">Abrir en Google Maps</a>
+          <button id="center" class="btn" type="button">Centrar recorrido</button>
+        </div>
+      </div>
+
+      <p id="note" class="note"></p>
+
+      <details id="list-wrap" class="list-wrap">
+        <summary><span id="count">0 puntos</span> · ver lista</summary>
+        <ol id="list" class="list"></ol>
+      </details>
+    </section>
+  </main>
+
+  <section id="gone" class="gone" hidden>
+    <div class="gone-card">
+      <h1>Enlace no disponible</h1>
+      <p>Este enlace de seguimiento no es válido o ya venció. Los enlaces duran 3 días desde que la persona activó su guardia.</p>
+      <p class="muted">Si hay una emergencia en curso, llama al 911.</p>
+    </div>
+  </section>
+
+  <script src="vendor/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
