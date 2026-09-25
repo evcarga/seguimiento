@@ -295,8 +295,24 @@ body {
   to   { opacity: 0;   transform: translate(-50%, -50%) scale(1.4); }
 }
 
-/* Con zoom lejano las horas se tapan entre si: solo queda la del ultimo punto */
-.hide-times .pin:not(.is-last) .pin-time { display: none; }
+/* Posicion en vivo ("Ahora"): se mueve cada 2 s */
+.pin.is-now .pin-num {
+  width: 24px;
+  height: 24px;
+  background: #2563eb;
+  font-size: 9px;
+}
+.pin.is-now .pin-time {
+  background: #2563eb;
+  font-size: 12px;
+  padding: 4px 6px;
+  bottom: calc(100% + 10px);
+}
+.pin.is-now.is-live .pin-num::after { border-color: #2563eb; }
+
+/* Con zoom lejano las horas se tapan entre si: solo quedan la del ultimo
+   punto y la de "Ahora" */
+.hide-times .pin:not(.is-last):not(.is-now) .pin-time { display: none; }
 
 .gone {
   flex: 1;
